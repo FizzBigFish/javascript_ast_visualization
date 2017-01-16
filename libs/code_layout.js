@@ -1,14 +1,9 @@
-var uglifyJs = require('uglify-js');
-
 module.exports = function( code ) {
 
   var lines = code.split('\n');
   var ret= {
     total_line : lines.length
   };
-
-  // var ast = uglifyJs.parse(code);
-  // ast.figure_out_scope();
 
   var node_list = [];
   var node = function( name ) {
@@ -49,28 +44,27 @@ module.exports = function( code ) {
    * //@@ /##name
    */
   var get_content = function( start, end ) {
-    console.log( start, end );
     return lines.slice(start, end).join('\n');
   }
+  var reg_seperater = /\/\/@@\s+(\/)?(#*)([a-z0-9_-]+)?$/i;
   lines.forEach(function( line, idx ) {
 
     if( line.indexOf( '//@@' ) == 0 ){
-      line.replace(/\/\/@@\s+(\/)?(#*)([a-z0-9_-]+)?$/i, function( $, is_close, lv, name) {
+
+
+      line.replace(reg_seperater, function( $, is_close, lv, name) {
           lv = lv.length;
-          console.log( $ );
           if( is_close ){
             if( name != current_node.name && name != '' && name != undefined){
               throw new Error('illegal close name : ' + name);
             }
             last_end_post = idx + 1;
-            console.log('close set content');
             current_node.content = get_content(last_start_pos, last_end_post);
             current_node.close();
             current_node = current_node.parent;
           } else {
             if( !current_node.closed ){
               last_end_post = idx;
-              console.log( 'set content for ', current_node.name);
               current_node.content = get_content(last_start_pos, last_end_post);
               current_node.close();
             }
@@ -82,7 +76,6 @@ module.exports = function( code ) {
             }
             new_node.lv = lv;
             last_start_pos = idx;
-            console.log('set content_before');
             new_node.content_before = get_content(last_end_post, last_start_pos);
             current_node = new_node;
           }
@@ -92,10 +85,8 @@ module.exports = function( code ) {
   });
   
   if( current_node.closed  ){
-    console.log('set content_after');
     structure.content_after = get_content(last_end_post);
   } else {
-    console.log('set content for last node');
     current_node.content = get_content(last_end_post);
   }
 

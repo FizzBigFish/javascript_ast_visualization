@@ -1,7 +1,7 @@
 ;
 var __WAServiceStartTime__ = Date.now();
 ! function(e) {
-  //@@ #WeixinJSBridge
+//@@ #WeixinJSBridge
   if ("function" == typeof logxx && logxx("jsbridge start"), !e.WeixinJSBridge) {
     if (e.navigator && e.navigator.userAgent) {
       var t = e.navigator.userAgent;
@@ -78,7 +78,7 @@ var __WAServiceStartTime__ = Date.now();
       subscribeHandler: y
     }
   }
-  //@@ /
+//@@ /
 }(this);
 //@@ #reporter
 var Reporter = function(e) {
@@ -409,7 +409,9 @@ var Reporter = function(e) {
       webviewScriptError: 5,
       exparserScriptError: 6
     }
-  }]),
+  }])
+//@@ /
+,
 //@@ #wx
   wx = function(e) {
     function t(o) {
@@ -3284,7 +3286,9 @@ var Reporter = function(e) {
         })
       };
     t.onAppEnterForeground = u, t.onAppEnterBackground = l
-  }]),
+  }])
+//@@ /
+,
 //@@ #appServiceEngine
   __appServiceEngine__ = function(e) {
     function t(o) {
@@ -4189,7 +4193,9 @@ var Reporter = function(e) {
     }, "create app instance"), t.getApp = function() {
       return p
     }
-  }]),
+  }])
+//@@ /
+,
 //@@ #AppGlobals
   Page = __appServiceEngine__.Page,
   App = __appServiceEngine__.App,
@@ -4244,7 +4250,9 @@ var Reporter = function(e) {
     }
     return i.exports
   }
-}(), 
+}()
+//@@ /
+, 
 //@@ #version
 wx.version = {
   updateTime: "2017.1.3 20:52:08",
