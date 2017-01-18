@@ -7,9 +7,9 @@ var path = require('path');
 // var source = fs.readFileSync(path.join(__dirname, '../output/root/test.js'), 'utf8');
 var source = fs.readFileSync(path.join(__dirname, '../output/root/wx.js'), 'utf8');
 
-var ctx = new esrefactor.Context(source);
 
 var ast = esprima.parse(source, { loc : true, range : true });
+var ctx = new esrefactor.Context(ast);
 
 var identifiers = [];
 var mapped_identifiers = [];
