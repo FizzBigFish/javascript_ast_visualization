@@ -265,13 +265,13 @@ module.exports =  function( code ) {
 
             } else {
 
-              console.log( parent.type );
+              // console.log( parent.type );
 
             }
           } else if( _parent_node == 'ForStatement' ){
 
           } else {
-            console.log( parent.type, _parent_node.type );
+            // console.log( parent.type, _parent_node.type );
           }
 
         }
