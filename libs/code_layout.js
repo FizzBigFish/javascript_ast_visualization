@@ -18,6 +18,7 @@ module.exports = function( code ) {
       this.lv = 0;
       this.closed = false;
       this.paths = [];
+      this.module_type = 'text';
 
       this.close = function() {
           this.closed = true;
@@ -46,13 +47,13 @@ module.exports = function( code ) {
   var get_content = function( start, end ) {
     return lines.slice(start, end).join('\n');
   }
-  var reg_seperater = /\/\/@@\s+(\/)?(#*)([a-z0-9_-]+)?$/i;
+  var reg_seperater = /\/\/@@\s+(\/)?(#*)(([a-z\.0-9_-]+)( +@([a-z\.0-9_-]+))?)?$/i;
   lines.forEach(function( line, idx ) {
 
     if( line.indexOf( '//@@' ) == 0 ){
 
 
-      line.replace(reg_seperater, function( $, is_close, lv, name) {
+      line.replace(reg_seperater, function( $, is_close, lv, $3, name, $5, module_type) {
           lv = lv.length;
           if( is_close ){
             if( name != current_node.name && name != '' && name != undefined){
@@ -73,6 +74,9 @@ module.exports = function( code ) {
               var new_node = current_node.add_child(name);
             } else {
               new_node = current_node.parent.add_child(name);
+            }
+            if( module_type ){
+              new_node.module_type = module_type;
             }
             new_node.lv = lv;
             last_start_pos = idx;

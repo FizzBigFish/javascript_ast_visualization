@@ -412,7 +412,7 @@ var Reporter = function(e) {
   }])
 //@@ /
 ,
-//@@ #wx
+//@@ #wx @webpack
   wx = function(e) {
     function t(o) {
       if (n[o]) return n[o].exports;
@@ -3289,7 +3289,7 @@ var Reporter = function(e) {
   }])
 //@@ /
 ,
-//@@ #appServiceEngine
+//@@ #appServiceEngine @webpack
   __appServiceEngine__ = function(e) {
     function t(o) {
       if (n[o]) return n[o].exports;

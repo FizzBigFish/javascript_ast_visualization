@@ -3,6 +3,7 @@
     "escodegen": "~1.8.1", 
     "esprima-selector": "~0.0.5", 
     "estraverse": "~4.2.0", 
+    "prettier": "~0.0.9", 
     "esrefactor": "~0.1.0", 
     "esprima": "~2.7.2", 
     "uglify-js": "~2.6.4"
