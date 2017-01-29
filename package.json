@@ -2,6 +2,7 @@
   "dependencies": {
     "escodegen": "~1.8.1", 
     "esprima-selector": "~0.0.5", 
+    "jade": "~1.11.0", 
     "estraverse": "~4.2.0", 
     "prettier": "~0.0.9", 
     "esrefactor": "~0.1.0", 

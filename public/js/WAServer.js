@@ -80,7 +80,7 @@ var __WAServiceStartTime__ = Date.now();
   }
 //@@ /
 }(this);
-//@@ #reporter
+//@@ #reporter @webpack
 var Reporter = function(e) {
     function t(o) {
       if (n[o]) return n[o].exports;

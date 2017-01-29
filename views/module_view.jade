@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+  meta(charset="UTF-8")
+  title Document
+body
+  style.
+    .container{
+      width: 750px;
+      margin: 0 auto;
+    }
+
+  
+  .container
+    .base_infe
+      h1= name
+    hr
+    .modules
+      each module in modules
+        .module
+          h2
+            a(href="##{module.name}")= module.name
+          p= module.module_type
+          if module.exports_name
+          p 
+            | exports :
+            = module.exports_name
+
+        if module.modules
+          for sub_module in module.modules
+            .sub_module
+              h3
+                a(href="##{module.name}.#{sub_module.name}")= sub_module.name
+              dl
+                dt dependencies
+                dd 
+                  ul.dependencies
+                    for dependent in sub_module.dependencies
+                      li= dependent
+                dt exports
+                dd
+                  ul.exports
+                    for export_name in sub_module.exports
+                      li= export_name
+            hr

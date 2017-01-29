@@ -19,6 +19,8 @@ module.exports = function( code ) {
       this.closed = false;
       this.paths = [];
       this.module_type = 'text';
+      this.start = 0;
+      this.end = 0;
 
       this.close = function() {
           this.closed = true;
@@ -44,14 +46,18 @@ module.exports = function( code ) {
    * //@@ ##name
    * //@@ /##name
    */
-  var get_content = function( start, end ) {
-    return lines.slice(start, end).join('\n');
+  var get_content = function( node, start, end ) {
+    node.start = start + 1;
+    node.end = end || lines.length;
+    return (node.content = lines.slice(start, end).join('\n'));
   }
   var reg_seperater = /\/\/@@\s+(\/)?(#*)(([a-z\.0-9_-]+)( +@([a-z\.0-9_-]+))?)?$/i;
   lines.forEach(function( line, idx ) {
 
     if( line.indexOf( '//@@' ) == 0 ){
-
+      if( !line.match(reg_seperater) ){
+        throw new Error('illegal pack mark : "' + line + '" at line : ' + (idx + 1) );
+      }
 
       line.replace(reg_seperater, function( $, is_close, lv, $3, name, $5, module_type) {
           lv = lv.length;
@@ -60,13 +66,15 @@ module.exports = function( code ) {
               throw new Error('illegal close name : ' + name);
             }
             last_end_post = idx + 1;
-            current_node.content = get_content(last_start_pos, last_end_post);
+
+            get_content(current_node, last_start_pos, last_end_post);
+
             current_node.close();
             current_node = current_node.parent;
           } else {
             if( !current_node.closed ){
               last_end_post = idx;
-              current_node.content = get_content(last_start_pos, last_end_post);
+              get_content(current_node, last_start_pos, last_end_post);
               current_node.close();
             }
 
@@ -89,9 +97,9 @@ module.exports = function( code ) {
   });
   
   if( current_node.closed  ){
-    structure.content_after = get_content(last_end_post);
+    structure.content_after = get_content({}, last_end_post);
   } else {
-    current_node.content = get_content(last_end_post);
+    get_content(current_node, last_end_post);
   }
 
   ret.root = structure;
